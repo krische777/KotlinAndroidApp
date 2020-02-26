@@ -36,9 +36,9 @@ class ListProductsActivity : Activity() {
                 recyclerView = findViewById<RecyclerView>(R.id.recycler_view).apply {
                     // use this setting to improve performance if you know that changes
                     // in content do not change the layout size of the RecyclerView
-                    setHasFixedSize(true)
+//                    setHasFixedSize(true)
                     layoutManager = GridLayoutManager(context, 2)
-                    adapter = ProductsAdapter(products)
+                    adapter = ProductsAdapter(products, context)
                     progressBar.visibility = View.GONE
 
 
