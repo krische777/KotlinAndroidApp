@@ -11,7 +11,7 @@ class ListProductsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_list_products)
         setSupportActionBar(toolbar)
 
-        val listOfProducts=intent.getStringExtra("productList")
+//        val listOfProducts=intent.getStringExtra("productList")
 
     }
 
