@@ -1,0 +1,62 @@
+package com.example.debijenkorf5
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import org.json.JSONArray
+import org.json.JSONObject
+
+class ProductsAdapter(private val products: JSONArray) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
+
+    override fun onBindViewHolder(holder: ProductsAdapter.ViewHolder, position: Int) {
+        val product = products.getJSONObject(position)
+        val variantProduct = product.getJSONObject("currentVariantProduct")
+        val firstImageUrl = getFirstImageUrl(variantProduct)
+        val price = variantProduct.getJSONObject("sellingPrice").getString("value")
+        val size = variantProduct.getString("size")
+        val color = variantProduct.getString("color")
+        val brand  = product.getJSONObject("brand")
+        val brandName = brand.getString("name")
+        Picasso.get().load(firstImageUrl).into(holder.image)
+        holder.name.text = product.getString("name")
+        holder.price.text = price
+        holder.size.text = size
+        holder.color.text = color
+        holder.brandName.text = brandName
+
+    }
+
+    private fun getFirstImageUrl(variantProduct: JSONObject): String {
+        val imagesArray = variantProduct.getJSONArray("images")
+        var firstImageUrl = imagesArray.getJSONObject(0).getString("url")
+        return firstImageUrl
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.product_row, parent, false)
+        val holder = ViewHolder(view)
+        view.setOnClickListener {
+//            val intent = Intent(parent.context, ProductDetails::class.java)
+//            intent.putExtra("title", products[holder.adapterPosition].title)
+//            intent.putExtra("photo_url", products[holder.adapterPosition].photoUrl)
+//            intent.putExtra("price", products[holder.adapterPosition].price)
+//            parent.context.startActivity(intent)
+        }
+        return holder
+    }
+
+    override fun getItemCount() = products.length()
+
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val image: ImageView = itemView.findViewById(R.id.photo)
+        val name: TextView = itemView.findViewById(R.id.title)
+        val price: TextView = itemView.findViewById(R.id.price)
+        val size: TextView = itemView.findViewById(R.id.price)
+        val color: TextView = itemView.findViewById(R.id.price)
+        val brandName: TextView = itemView.findViewById(R.id.price)
+    }
+}
