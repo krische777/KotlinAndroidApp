@@ -4,11 +4,10 @@ import android.content.Context
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
 
 class LocalRequestQueue constructor(context: Context) {
     companion object {
-        val GSON = Gson()
+//        val GSON = Gson()
         @Volatile
         private var INSTANCE: LocalRequestQueue? = null
         fun getInstance(context: Context) =
