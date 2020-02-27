@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
-import android.widget.EditText
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.buttonSearch)
 
         button.setOnClickListener {
-            val textNew = findViewById<EditText>(R.id.textInput)
-            val query = textNew.text.toString()
+            val textNew = findViewById<SearchView>(R.id.textInput)
+            val query = textNew.query.toString()
             Log.i("str", "Search bar text $query")
 
             if (query.isNotEmpty()) {
