@@ -16,19 +16,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setHomeButtonEnabled(true)
 
         val button = findViewById<Button>(R.id.buttonSearch)
+
         button.setOnClickListener {
             val textNew = findViewById<EditText>(R.id.textInput)
             val query = textNew.text.toString()
             Log.i("str", "Search bar text $query")
+
             if (query.isNotEmpty()) {
+                button.isEnabled = true
+                button.isClickable = true
                 val intent = Intent(this, ListProductsActivity::class.java)
                 intent.putExtra(
                     "query",
                     query
                 )
                 startActivityForResult(intent, 1)
+            } else {
+                button.isEnabled = false
+                button.isClickable = false
             }
         }
     }

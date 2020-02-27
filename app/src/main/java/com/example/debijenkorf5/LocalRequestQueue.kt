@@ -7,9 +7,9 @@ import com.android.volley.toolbox.Volley
 
 class LocalRequestQueue constructor(context: Context) {
     companion object {
-//        val GSON = Gson()
         @Volatile
         private var INSTANCE: LocalRequestQueue? = null
+
         fun getInstance(context: Context) =
             INSTANCE ?: synchronized(this) {
                 INSTANCE ?: LocalRequestQueue(context).also {
@@ -18,7 +18,7 @@ class LocalRequestQueue constructor(context: Context) {
             }
     }
 
-   private val requestQueue: RequestQueue by lazy {
+    private val requestQueue: RequestQueue by lazy {
         Volley.newRequestQueue(context.applicationContext)
     }
 

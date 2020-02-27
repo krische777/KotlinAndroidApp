@@ -10,10 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import org.json.JSONArray
 import org.json.JSONObject
 
-class ProductsAdapter(private val products: JSONArray, private val context: Context) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
+class ProductsAdapter(private val data: JSONObject, private val context: Context) :
+    RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
+    val products = data.getJSONArray("products")
 
     override fun onBindViewHolder(holder: ProductsAdapter.ViewHolder, position: Int) {
         val product = products.getJSONObject(position)
@@ -22,7 +23,7 @@ class ProductsAdapter(private val products: JSONArray, private val context: Cont
         val price = variantProduct.getJSONObject("sellingPrice").getString("value")
         val size = variantProduct.getString("size")
         val color = variantProduct.getString("color")
-        val brand  = product.getJSONObject("brand")
+        val brand = product.getJSONObject("brand")
         val brandName = brand.getString("name")
 
         Picasso.get().load(firstImageUrl).into(holder.image)
@@ -48,9 +49,18 @@ class ProductsAdapter(private val products: JSONArray, private val context: Cont
         val holder = ViewHolder(view)
         view.setOnClickListener {
             val intent = Intent(parent.context, ProductDetails::class.java)
-            intent.putExtra("brand", products.getJSONObject(holder.adapterPosition).getJSONObject("brand").getString("name"))
-//            intent.putExtra("photo_url", products[holder.adapterPosition].photoUrl)
-//            intent.putExtra("price", products[holder.adapterPosition].price)
+            intent.putExtra(
+                "productCode",
+                products.getJSONObject(holder.adapterPosition).getString("code")
+            )
+            intent.putExtra(
+                "currentVariantCode",
+                products.getJSONObject(holder.adapterPosition).getJSONObject("currentVariantProduct").getString(
+                    "code"
+                )
+            )
+
+
             parent.context.startActivity(intent)
         }
         return holder
